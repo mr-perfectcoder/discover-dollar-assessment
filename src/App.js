@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, styled } from '@mui/material'
+import Banner from './components/Banner/Banner'
+import Category from './components/Category/Category'
+import Header from './components/Header/Header'
 
+
+const BannerContainer = styled(Box)`
+  padding: 10px;
+`
+const CategoryContainer = styled(Box)`
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 16%);
+`
+const Container = styled(Box)`
+  margin-top: 55;
+`
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Header />
+      <Container>
+        <CategoryContainer>
+          <Category />
+        </CategoryContainer>
+        <BannerContainer>
+          <Banner />
+        </BannerContainer>
+      </Container>
+    </>
+  )
 }
 
-export default App;
+export default App

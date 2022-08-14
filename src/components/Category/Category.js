@@ -9,7 +9,7 @@ const CatBody = styled(Box)`
   margin: 55px 0 0 0;
   justify-content: space-between;
   background: #fff;
-  @media only screen and (min-width: 920px) {
+  @media only screen and (min-width: 720px) {
     margin: 55px 100px 0 100px;
   }
 `
@@ -23,6 +23,7 @@ const Text = styled(Typography)`
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
+  text-align: center;
 `
 const SubText = styled(Typography)`
   font-size: 14px;
@@ -44,7 +45,7 @@ const Category = () => {
       {Cdata.map((item, index) => (
         <Card key={index.toString()} className='tooltip cat'>
           <img src={item.icon} alt={item.title} style={{ width: 64 }} />
-          <Flex>
+          <Flex >
             <Text>{item.title} </Text>
             {item.subCat && (
               <KeyboardArrowDownIcon
@@ -82,7 +83,9 @@ const Category = () => {
                           setactivesubList(indexSub)
                         }}
                       >
-                        <Flex className='leftList'>
+                        <Flex className='leftList' style={{
+                           justifyContent: 'space-between'
+                        }}>
                           <SubText
                             style={
                               activesubList === indexSub

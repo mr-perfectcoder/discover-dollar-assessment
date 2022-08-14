@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/material'
+import { useEffect, useState } from 'react'
 import Banner from './components/Banner/Banner'
 import Category from './components/Category/Category'
 import Header from './components/Header/Header'
-
 
 const BannerContainer = styled(Box)`
   padding: 10px;
@@ -14,17 +14,36 @@ const Container = styled(Box)`
   margin-top: 55;
 `
 function App() {
+  const [isMobile, setIsMobile] = useState(false)
+  const handleResize = () => {
+    if (window.innerWidth <  992) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+  })
+
   return (
     <>
-      <Header />
-      <Container>
-        <CategoryContainer>
-          <Category />
-        </CategoryContainer>
-        <BannerContainer>
-          <Banner />
-        </BannerContainer>
-      </Container>
+      {isMobile ? (
+        <h1 style={{ textAlign:'center',marginTop:50 }}>Mobile version is under development ✌️ </h1>
+      ) : (
+        <>
+          <Header />
+          <Container>
+            <CategoryContainer>
+              <Category />
+            </CategoryContainer>
+            <BannerContainer>
+              <Banner />
+            </BannerContainer>
+          </Container>
+        </>
+      )}
     </>
   )
 }

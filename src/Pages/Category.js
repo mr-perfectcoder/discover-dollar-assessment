@@ -1,9 +1,7 @@
 import React from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const Category = () => {
-  const location = useLocation()
-
   const params = useParams()
   console.log(params)
   return (

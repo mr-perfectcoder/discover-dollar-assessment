@@ -1,5 +1,6 @@
 import { AppBar, Toolbar,styled ,Box} from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom';
 import NavItems from './NavItems';
 import Search from './Search';
 
@@ -15,7 +16,7 @@ const Image = styled('img')({
   width: 75
 })
 
-const Header = () => {
+const Header = ({ isLogin }) => {
   return (
     <StyleHeader>
       <Toolbar
@@ -24,13 +25,16 @@ const Header = () => {
         }}
       >
         <Logo>
-          <Image
-            alt='logo'
-            src='https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fk-plus_3b0baa.png'
-          />
+          <Link to='/'>
+            <Image
+              alt='logo'
+              src='https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/fk-plus_3b0baa.png'
+            />
+          </Link>
         </Logo>
+
         <Search />
-        <NavItems />
+        <NavItems isLogin={isLogin} />
       </Toolbar>
     </StyleHeader>
   )

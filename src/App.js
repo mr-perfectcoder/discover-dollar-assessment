@@ -1,49 +1,83 @@
-import { Box, styled } from '@mui/material'
-import { useEffect, useState } from 'react'
-import Banner from './components/Banner/Banner'
-import Category from './components/Category/Category'
+import HomePage from './Pages/HomePage'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Login from './Pages/Login'
 import Header from './components/Header/Header'
+import useToken from './hooks/useToken'
+// import Profile from './Pages/Profile'
+// import Cart from './Pages/Cart'
+import NotFound from './Pages/NotFound'
+import useRouter from './hooks/useRouter'
+import BecomeAseller from './Pages/Become-a-seller'
+import Category from './Pages/Category'
+import More from './Pages/More'
+const App = () => {
+  const {  setToken, isLogin, isINIT } = useToken()
 
-const BannerContainer = styled(Box)`
-  padding: 10px;
-`
-const CategoryContainer = styled(Box)`
-  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 16%);
-`
-const Container = styled(Box)`
-  margin-top: 55;
-`
-function App() {
-  const [isMobile, setIsMobile] = useState(false)
-  const handleResize = () => {
-    if (window.innerWidth <  992) {
-      setIsMobile(true)
-    } else {
-      setIsMobile(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-  })
-
+  const { routes } = useRouter()
   return (
     <>
-      {isMobile ? (
-        <h1 style={{ textAlign:'center',marginTop:50 }}>Mobile version is under development ✌️ </h1>
-      ) : (
-        <>
-          <Header />
-          <Container>
-            <CategoryContainer>
-              <Category />
-            </CategoryContainer>
-            <BannerContainer>
-              <Banner />
-            </BannerContainer>
-          </Container>
-        </>
-      )}
+      <Header isLogin={isLogin} />
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/become-a-seller' element={<BecomeAseller />} />
+        <Route path='/more' element={<More />} />
+        <Route path='/category' element={<Category />} />
+        <Route path='/category/:pCat' element={<Category />} />
+        <Route path='/category/:pCat/:sCat' element={<Category />} />
+        <Route path='/category/:pCat/:sCat/:iCat' element={<Category />} />
+        {isINIT &&
+          (isLogin ? (
+            <>
+              {routes.map((route, index) => (
+                <Route
+                  key={index.toString()}
+                  path={route.Path}
+                  element={<route.Element {...route.props} />}
+                />
+              ))}
+              <Route path='/login' element={<Navigate to='/' replace />} />
+              <Route path='/not-found' element={<NotFound />} />
+              <Route path='*' element={<Navigate to='/not-found' replace />} />
+            </>
+          ) : (
+            <>
+              <Route path='/login' element={<Login setToken={setToken} />} />
+              {routes.map((route, index) => (
+                <Route
+                  key={index.toString()}
+                  path={route.Path}
+                  element={<Navigate to='/login' replace />}
+                />
+              ))}
+              <Route path='/not-found' element={<NotFound />} />
+              <Route path='*' element={<Navigate to='/not-found' replace />} />
+            </>
+          ))}
+        {/* {isINIT &&
+          (isLogin ? (
+            <>
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='/login' element={<Navigate to='/' replace />} />
+              <Route path='/not-found' element={<NotFound />} />
+              <Route path='*' element={<Navigate to='/not-found' replace />} />
+            </>
+          ) : (
+            <>
+              <Route
+                path='/login'
+                element={<Login setToken={setToken}  />}
+              />
+              <Route
+                path='/profile'
+                element={<Navigate to='/login' replace />}
+              />
+              <Route path='/cart' element={<Navigate to='/login' replace />} />
+              <Route path='/not-found' element={<NotFound />} />
+              <Route path='*' element={<Navigate to='/not-found' replace />} />
+            </>
+          ))} */}
+      </Routes>
     </>
   )
 }
